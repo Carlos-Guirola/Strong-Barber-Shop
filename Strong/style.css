@@ -1,0 +1,240 @@
+
+
+header {
+    display: flex;
+    height: auto;
+    background-color: #F50D25;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    width: 100%; 
+    max-width: 100%; 
+}
+
+.logo{
+    align-items: center;
+    padding: 15px;
+    height: 100px;
+    width: auto;
+}
+div .c{
+text-decoration: none;
+text-align: right;
+padding-left: 100px;
+color: white;
+font-size: 30px;
+}
+.ac{
+    background-color: #ffffff;
+    color: #F50D25; 
+    padding: 49px 25px; 
+    border-radius: 0px;
+    cursor: pointer; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+}
+.ci{
+    text-decoration: none;
+    color: #F50D25;
+    font-size: 30px;
+  
+}
+.ip {
+    position: relative; 
+    padding-top: 60px;
+    height: auto;
+    width: 1290px;
+    max-width: 100%; 
+}
+
+.text {
+position: absolute;
+left: 50%;
+top: 79%;
+transform: translate(-50%, -50%);
+padding: 10px; 
+font-family: 'JejuMyeongjo';
+font-style: normal;
+font-size: 4vw;
+color: #FFFFFF;
+mix-blend-mode: overlay;
+
+}
+
+.t1{
+    text-align: center;
+    color: #F50D25; 
+    font-size: 70px;
+    margin-top: 10px;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+.t2{
+    text-align: center;
+    max-width: 1000px;
+    font-size: 20px;
+    word-spacing: 10px;
+    margin: 0 auto;
+    color: #6B676C;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+
+}
+.t3{
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    word-spacing: 10px;
+    margin: 0 auto;
+    color: #6B676C;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+}
+.contenedor {
+    text-align: center;
+}
+
+.carousel {
+    position: relative;
+    width: 700px; 
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .image {
+    flex: 0 0 calc(33.33% - 10px); 
+    margin-right: 15px; 
+  }
+  
+  .image:last-child {
+    margin-right: 0; 
+  }
+  
+  .image img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    display: block;
+  }
+  
+  p {
+    text-align: center;
+  }
+  
+  button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .prev {
+    left: 0;
+  }
+  
+  .next {
+    right: 0;
+  }
+  
+  #te11{
+    color: #F50D25; 
+    font-size: 25px;
+    margin-top: 10px;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+p{
+    color:  #6B676C ; 
+    font-size: 15px;
+    margin-top: 10px;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+    font-style: normal;
+
+}
+.horarios {
+    padding: 5px;
+    width: 250px;
+    float: left;
+  }
+  
+  footer {
+  background-color: #F50D25;
+  padding-top: 0.5px; 
+  margin-top: auto;
+  }
+  #ft{
+    color: white ; 
+    font-size: 25px;
+    margin-top: 10px;
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 300;
+    font-style: normal;
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .social-icons {
+    margin-bottom: 1cm; 
+  }
+  
+  .icon {
+    width: 30px; 
+    height: 30px; 
+    text-align: right;
+    padding: 0.6cm;
+  }
+  
+  .horarios {
+    padding: 10px;
+    width: 250px;
+    left: right;
+  }
+
+  .spacer {
+    margin-bottom: 2.5cm; 
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .footer {
+      padding: 10px;  
+    }
+  
+    .icon img {
+      width: 30px; 
+      height: 30px;
+    }
+  }
+
+ .carousel-images carousel-item img {
+    max-height: 200px;
+  }
+  .c{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .c {
+    margin: 10px 0;
+  }
+
+
