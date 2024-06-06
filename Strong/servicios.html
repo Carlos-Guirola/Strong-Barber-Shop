@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon"type="img/png" href="Logo.png">
+    <title>Strong Barber Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="scrip.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="hoja de estilo">
+</head>
+<body>
+  <header>
+		<div>
+			<img src="Logo.png" alt="" class="logo">
+		  </div>
+		<div>
+			<a href="index.html" class="c" >Inicio</a>
+			<a href="servicios.html" class="c">Servcios<a>
+			<a href="blog.html" class="c" >Blog</a>
+		   </div>
+		  <a href="servicios.html" class="ci">Agendar Cita</a>
+    </header>
+
+<div class="contenedor">
+    <div class="div-rojo"></div>
+        <img src="Categorias/barbero.jpg" class="imgser">
+  </div>
+  <div class="text-box">
+          <h2 class="TS">Servicios</h2>
+          <h3 class="txS">
+            En Strong Barber Shop contamos con una gran variedad de 
+            servicios para hombres. A continuación conoce nuestras 
+            categorías y ¡agenda tu cita hoy mismo!. 
+          <h3>
+        </div>
+    
+    <div>
+        <h2 class="txsc">Seleccione una categoria</h2>
+    </div>
+    <div class="carousel" onmouseover="startCarousel()" onmouseout="stopCarousel()">
+      <div class="button-container">
+          <button class="prev" onclick="changeSlide(-1)">&#9654;</button>
+        </div>
+    
+      <div class="carousel-images">
+        <div class="image">
+          <a href="Categorias/cortes.html"><img src="Categorias/cortes.jpg" alt="Image 1"></a>
+          <p id="te">Cortez y Afeitados</p>
+        </div>
+        <div class="image">
+        <a href="Categorias/permanentes.html"><img src="Categorias/Permanentes.jpeg" alt="Image 2"></a>  
+          <p id="te">Permanentes</p>
+           </div>
+        <div class="image">
+          <a href="Categorias/mascarillas.html"> <img src="Categorias/Mascarilla-Mask.jpg " alt="Image 3"></a> 
+          <p id="te">Mascarilla Mask</p>
+        </div>
+        <div class="image">
+          <a href="Categorias/estilos.html"> <img src="Categorias/fade-style.jpg " alt="Image 4"></a> 
+          <p id="te">Fade Style</p>
+        </div>
+      </div>
+      <div class="button-container">
+          <button class="next" onclick="changeSlide(1)">&#9654;</button>
+        </div>   
+    </div>
+  </div>
+
+  <section>
+    <div class="acerca">
+    <div class="horario">
+      <h2 id="te11">Horarios</h2>
+      <p>Lunes a Viernes <br>8:00 AM a 5:00 PM</p>
+      <p>Sabados a Domingos <br>9:00 AM a 4:00 PM</p>
+    </div>
+    <div class="direcion" >
+      <h2 id="te11">Direccion</h2>
+      <p>P7PM+2PJ, Aveida El Angel, Sonsonate <br>
+      Telefono: 2448-7766</p>
+    </div>
+    <div class="iconos">
+   <img src="ICONOS/Equix.png" class="icono" alt="icono 1">
+   <img src="ICONOS/FACE.png" class="icono" alt="icono 2">
+   <img src="ICONOS/INSTAGRAM.png" class="icono" alt="icono 3">
+   <img src="ICONOS/WhatApp.png"  class="icono" alt="icono 4 ">
+    </div>
+</div>
+  </section>
+</body>
+<footer>
+  <h4 id="ft">Strong Barber Shop</h4>
+  </footer>
+</html>
