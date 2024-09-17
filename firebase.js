@@ -1,4 +1,5 @@
-// Importa Firebase y Firestore
+// firebase.js
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
@@ -19,5 +20,7 @@ const app = initializeApp(firebaseConfig);
 // Inicializa Firestore (base de datos)
 const db = getFirestore(app);
 
-export { db };
+// Exporta app y db
+export { app, db };
+
 
