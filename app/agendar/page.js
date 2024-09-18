@@ -77,11 +77,7 @@ export default function AgendarCita() {
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold text-center mb-6 text-red-500">Agendar Cita</h1>
           <div className="flex justify-center mb-6">
-<<<<<<< HEAD
             <img src="/logo.png" alt="Logo" className="h-16" />
-=======
-            <img src="/Logo.png" alt="Logo" className="h-16" /> 
->>>>>>> 11990a3ffebe2ff9b92aaf28d590d67d96dbd77a
           </div>
           {mensaje && <p className="text-green-500 mb-4 text-center">{mensaje}</p>}
           <div className="mb-4">
