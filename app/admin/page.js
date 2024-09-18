@@ -152,7 +152,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen p-8 bg-white">
       <header className="flex justify-between items-center mb-6">
-        <img src="/logo.png" alt="Logo" className="h-20" />
+        <img src="/Logo.png" alt="Logo" className="h-20" />
         <button
           onClick={handleSignOut}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
