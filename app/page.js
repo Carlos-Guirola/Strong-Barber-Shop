@@ -105,12 +105,12 @@ export default function Home() {
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 flex flex-col">
-        <img src="/su.jpg" alt="Corte de Cabello" className="w-full h-48 object-cover rounded-t-lg mb-4" />
+        <img src="/cu.jpg" alt="Corte de Cabello" className="w-full h-48 object-cover rounded-t-lg mb-4" />
         <h3 className="text-xl text-red-500 font-bold mb-2">Corte de Cabello Urbano</h3>
         <p className="text-gray-700">Ofrecemos cortes de cabello urbano a la moda y personalizados según tus preferencias.</p>
       </div>
       <div className="bg-white p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 flex flex-col">
-        <img src="/s1.jpg" alt="Afeitado" className="w-full h-48 object-cover rounded-t-lg mb-4" />
+        <img src="/cf.jpg" alt="Afeitado" className="w-full h-48 object-cover rounded-t-lg mb-4" />
         <h3 className="text-xl text-red-500 font-bold mb-2">Corte de Cabello Clásico</h3>
         <p className="text-gray-700">El corte de cabello clásico ofrece un estilo elegante y atemporal, con líneas limpias y un acabado pulido para un look sofisticado y fácil de mantener.</p>
       </div>
@@ -145,7 +145,7 @@ export default function Home() {
   <div className="absolute inset-0 z-0 bg-gradient-to-r from-red-500 to-red-700" />
   <div className="relative z-10 container mx-auto px-6 py-12 flex flex-col lg:flex-row items-center">
     <div className="lg:w-1/2 flex justify-center mb-8 lg:mb-0">
-      <img src="/img.jpg" alt="Sobre Nosotros" className="w-full max-w-md rounded-lg shadow-lg" />
+      <img src="/sn.jpg" alt="Sobre Nosotros" className="w-full max-w-md rounded-lg shadow-lg" />
     </div>
     <div className="lg:w-1/2 lg:pl-12 text-center lg:text-left">
       <h2 className="text-4xl font-bold text-white mb-6">Sobre Nosotros</h2>
@@ -169,6 +169,9 @@ export default function Home() {
         Media cuadra abajo del Parque Sonzacate </p>
         <h3 className="text-2xl text-black font-semibold mb-4">Teléfono</h3>
         <p className="text-lg  text-black mb-2">+503 2448 3766</p>
+        <h3 className="text-2xl text-black font-semibold mb-4">WhatsApp</h3>
+        <p className="text-lg  text-black mb-2">+503 70529914</p>
+
       </div>
 
       <div className="flex flex-col justify-center">

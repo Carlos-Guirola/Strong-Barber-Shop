@@ -64,6 +64,7 @@ export default function Admin() {
   const [selectedDate, setSelectedDate] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editCita, setEditCita] = useState(null);
+  const [completedCitas, setCompletedCitas] = useState([]);
   const router = useRouter();
   const auth = getAuth();
 
@@ -81,8 +82,13 @@ export default function Admin() {
           id: doc.id,
           ...doc.data(),
         }));
-        setCitas(citasData);
-        setFilteredCitas(citasData); 
+        const sortedCitas = citasData.sort((a, b) => {
+          const hourA = new Date(`1970-01-01T${formatHourForInput(a.hora)}:00`).getTime();
+          const hourB = new Date(`1970-01-01T${formatHourForInput(b.hora)}:00`).getTime();
+          return hourA - hourB;
+        });
+        setCitas(sortedCitas);
+        setFilteredCitas(sortedCitas);
       } catch (error) {
         console.error('Error fetching citas: ', error);
       } finally {
@@ -111,7 +117,7 @@ export default function Admin() {
       const filtered = citas.filter(cita => cita.fecha === date);
       setFilteredCitas(filtered);
     } else {
-      setFilteredCitas(citas); 
+      setFilteredCitas(citas);
     }
   };
 
@@ -130,6 +136,10 @@ export default function Admin() {
     }
   };
 
+  const handleCompleteClick = (id) => {
+    setCompletedCitas((prev) => [...prev, id]);
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!editCita) return;
@@ -138,7 +148,7 @@ export default function Admin() {
       const citaRef = doc(db, 'citas', editCita.id);
       await updateDoc(citaRef, {
         ...editCita,
-        hora: formatHourForInput(editCita.hora) 
+        hora: formatHourForInput(editCita.hora)
       });
       setCitas(citas.map(cita => cita.id === editCita.id ? editCita : cita));
       setFilteredCitas(filteredCitas.map(cita => cita.id === editCita.id ? editCita : cita));
@@ -156,7 +166,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen p-8 bg-white">
       <header className="flex justify-between items-center mb-6">
-        <img src="/logo.png" alt="Logo" className="h-20" /> 
+        <img src="/logo.png" alt="Logo" className="h-20" />
         <button
           onClick={handleSignOut}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
@@ -180,6 +190,7 @@ export default function Admin() {
             <tr>
               <th className="py-3 px-4 border-b">Nombre</th>
               <th className="py-3 px-4 border-b">Servicio</th>
+              <th className="py-3 px-4 border-b">Barbero</th>
               <th className="py-3 px-4 border-b">Fecha</th>
               <th className="py-3 px-4 border-b">Hora</th>
               <th className="py-3 px-4 border-b">Teléfono</th>
@@ -188,24 +199,31 @@ export default function Admin() {
           </thead>
           <tbody>
             {filteredCitas.map((cita) => (
-              <tr key={cita.id} className="hover:bg-gray-100">
+              <tr key={cita.id} className={`hover:bg-gray-100 ${completedCitas.includes(cita.id) ? 'bg-green-100' : ''}`}>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.nombre}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.servicio}</td>
+                <td className="py-3 px-4 border-b text-center text-black">{cita.barbero}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.fecha}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{formatHour(cita.hora)}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.telefono}</td>
                 <td className="py-3 px-4 border-b text-center">
                   <button 
                     onClick={() => handleEditClick(cita)}
-                    className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
+                    className="bg-yellow-500 text-white px-4 py-1 rounded mr-2 hover:bg-yellow-600 transition duration-300"
                   >
                     Editar
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDeleteClick(cita.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition duration-300"
                   >
                     Eliminar
+                  </button>
+                  <button
+                    onClick={() => handleCompleteClick(cita.id)}
+                    className="bg-green-500 text-white px-4 mx-2 py-1 rounded hover:bg-green-600 transition duration-300"
+                  >
+                    Completada
                   </button>
                 </td>
               </tr>
@@ -214,85 +232,82 @@ export default function Admin() {
         </table>
       </div>
 
-      {editMode && editCita && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+      {editMode && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-bold mb-4">Editar Cita</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-red-500">Editar cita</h2>
             <form onSubmit={handleUpdate}>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edit-nombre">
-                  Nombre
-                </label>
+                <label className="block text-black mb-2">Nombre:</label>
                 <input
                   type="text"
-                  id="edit-nombre"
                   value={editCita.nombre}
                   onChange={(e) => setEditCita({ ...editCita, nombre: e.target.value })}
-                  className="w-full px-3 text-black py-2 border rounded"
+                  className="w-full p-2 text-black border border-red-500 rounded"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edit-servicio">
-                  Servicio
-                </label>
+                <label className="block text-black mb-2">Selecciona un Servicio:</label>
                 <input
                   type="text"
-                  id="edit-servicio"
                   value={editCita.servicio}
                   onChange={(e) => setEditCita({ ...editCita, servicio: e.target.value })}
-                  className="w-full px-3 text-black py-2 border rounded"
+                  className="w-full p-2 text-black border border-red-500 rounded"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edit-fecha">
-                  Fecha
+                <label className="block text-black mb-2" htmlFor="barbero">
+                  Selecciona un Barbero
                 </label>
+                <select
+                  id="barbero"
+                  value={editCita.barbero} 
+                  onChange={(e) => setEditCita({ ...editCita, barbero: e.target.value })} 
+                  className="w-full px-3 text-black py-2 border rounded"
+                  required
+                >
+                  <option value="" disabled>Selecciona un barbero</option>
+                  <option value="Javier">Javier</option>
+                  <option value="Eliseo">Eliseo</option>
+                  <option value="Enrique">Enrique</option>
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-black mb-2">Fecha:</label>
                 <input
                   type="date"
-                  id="edit-fecha"
                   value={editCita.fecha}
                   onChange={(e) => setEditCita({ ...editCita, fecha: e.target.value })}
-                  className="w-full px-3 text-black py-2 border rounded"
+                  className="w-full p-2 text-black border border-red-500 rounded"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edit-hora">
-                  Hora
-                </label>
+                <label className="block text-black mb-2">Hora:</label>
                 <HourSelector
-                  value={editCita.hora}
+                  value={formatHour(editCita.hora)}
                   onChange={(newHour) => setEditCita({ ...editCita, hora: newHour })}
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="edit-telefono">
-                  Teléfono
-                </label>
+                <label className="block text-black mb-2">Teléfono:</label>
                 <input
                   type="tel"
-                  id="edit-telefono"
                   value={editCita.telefono}
                   onChange={(e) => setEditCita({ ...editCita, telefono: e.target.value })}
-                  className="w-full px-3 text-black py-2 border rounded"
+                  className="w-full p-2 border text-black border-red-500 rounded"
                   required
                 />
               </div>
-              <div className="flex justify-between">
+              <div className="text-center">
                 <button
                   type="submit"
-                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition duration-300"
                 >
                   Guardar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditMode(false)}
-                  className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400"
-                >
-                  Cancelar
                 </button>
               </div>
             </form>
