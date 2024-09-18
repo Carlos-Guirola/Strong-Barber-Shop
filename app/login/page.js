@@ -31,7 +31,7 @@ export default function Login() {
       <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-4 text-red-500">Iniciar Sesión</h1>
         <div className="flex justify-center mb-6">
-          <img src="/logo.png" alt="Logo" className="h-16" /> 
+          <img src="/Logo.png" alt="Logo" className="h-16" /> 
         </div>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         <div className="mb-4">
