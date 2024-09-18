@@ -17,15 +17,17 @@ export default function AgendarCita() {
   const [mensaje, setMensaje] = useState('');
   const router = useRouter();
 
-  const formatTo12Hour = (hour, minutes, ampm) => {
-    const formattedHour = ((hour % 12) || 12).toString().padStart(2, '0');
-    return `${formattedHour}:${minutes} ${ampm}`;
+  // Convertir hora a formato de 12 horas
+  const formatTo12Hour = (hour, ampm) => {
+    const hourInt = parseInt(hour, 10);
+    let formattedHour = hourInt % 12 || 12; // Ajustar hora a formato de 12 horas
+    return `${formattedHour.toString().padStart(2, '0')}:${minutos} ${ampm}`;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedHora = `${hora}:${minutos} ${ampm}`;
+    const formattedHora = formatTo12Hour(hora, ampm); // Guardar la hora en formato de 12 horas
 
     try {
       const citasRef = collection(db, 'citas');
@@ -47,7 +49,7 @@ export default function AgendarCita() {
           nombre,
           servicio,
           fecha,
-          hora: formattedHora,
+          hora: formattedHora, // Guardando la hora en formato de 12 horas
           telefono,
           barbero,
         });
@@ -77,12 +79,12 @@ export default function AgendarCita() {
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold text-center mb-6 text-red-500">Agendar Cita</h1>
           <div className="flex justify-center mb-6">
-            <img src="/logo.png" alt="Logo" className="h-16" />
+            <img src="/Logo.png" alt="Logo" className="h-16" />
           </div>
           {mensaje && <p className="text-green-500 mb-4 text-center">{mensaje}</p>}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="nombre">
-              Nombre Completo
+              Nombre Completo:
             </label>
             <input
               type="text"
@@ -95,7 +97,7 @@ export default function AgendarCita() {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="servicio">
-              Servicio
+              Seleccione un Servicio:
             </label>
             <select
               id="servicio"
@@ -105,17 +107,17 @@ export default function AgendarCita() {
               required
             >
               <option value="" disabled>Selecciona un servicio</option>
-              <option value="Corte de cabello">Corte de cabello Urbano</option>
-              <option value="Afeitado">Corte de cabello Clásico</option>
-              <option value="Tinte">Delineado de Barba</option>
-              <option value="Recorte de barba">Tinte en Barba</option>
-              <option value="Limpieza facial">Delineado de Cejas</option>
-              <option value="Limpieza facial">Aplicación de mascarilla Black Mask</option>
+              <option value="Corte de cabello Urbano">Corte de cabello Urbano</option>
+              <option value="Corte de cabello Clásico">Corte de cabello Clásico</option>
+              <option value="Delineado de Barba">Delineado de Barba</option>
+              <option value="Tinte en Barba">Tinte en Barba</option>
+              <option value="Delineado de Cejas">Delineado de Cejas</option>
+              <option value="Aplicación de mascarilla Black Mask">Aplicación de mascarilla Black Mask</option>
             </select>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="barbero">
-              Barbero
+             Seleccione un Barbero:
             </label>
             <select
               id="barbero"
@@ -132,7 +134,7 @@ export default function AgendarCita() {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fecha">
-              Fecha
+              Fecha:
             </label>
             <input
               type="date"
@@ -145,7 +147,7 @@ export default function AgendarCita() {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="hora">
-              Hora
+              Hora:
             </label>
             <div className="flex space-x-2">
               <select
@@ -181,11 +183,11 @@ export default function AgendarCita() {
                 <option value="PM">PM</option>
               </select>
             </div>
-            <p className="text-gray-700 mt-2">Hora seleccionada: {formatTo12Hour(hora, minutos, ampm)}</p>
+            <p className="text-gray-700 mt-2">Hora seleccionada: {formatTo12Hour(hora, ampm)}</p>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="telefono">
-              Teléfono
+              Teléfono:
             </label>
             <input
               type="tel"

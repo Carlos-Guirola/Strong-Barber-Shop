@@ -6,19 +6,6 @@ import { useRouter } from 'next/navigation';
 import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-const formatHour = (hour) => {
-  const [hours, minutes] = hour.split(':');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const hour12 = hours % 12 || 12;
-  return `${hour12}:${minutes} ${ampm}`;
-};
-
-const formatHourForInput = (hour) => {
-  const [hours, minutes] = hour.split(':');
-  const hours24 = hours === '12' ? '12' : (parseInt(hours) + 12) % 24;
-  return `${hours24}:${minutes}`;
-};
-
 const HourSelector = ({ value, onChange }) => {
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const minutes = ['00', '15', '30', '45'];
@@ -57,6 +44,13 @@ const HourSelector = ({ value, onChange }) => {
   );
 };
 
+const formatHour = (hour) => {
+  const [time, period] = hour.split(' ');
+  const [hours, minutes] = time.split(':');
+  const formattedHours = hours.length === 1 ? `0${hours}` : hours; 
+  return `${formattedHours}:${minutes} ${period}`;
+};
+
 export default function Admin() {
   const [citas, setCitas] = useState([]);
   const [filteredCitas, setFilteredCitas] = useState([]);
@@ -82,13 +76,8 @@ export default function Admin() {
           id: doc.id,
           ...doc.data(),
         }));
-        const sortedCitas = citasData.sort((a, b) => {
-          const hourA = new Date(`1970-01-01T${formatHourForInput(a.hora)}:00`).getTime();
-          const hourB = new Date(`1970-01-01T${formatHourForInput(b.hora)}:00`).getTime();
-          return hourA - hourB;
-        });
-        setCitas(sortedCitas);
-        setFilteredCitas(sortedCitas);
+        setCitas(citasData);
+        setFilteredCitas(citasData);
       } catch (error) {
         console.error('Error fetching citas: ', error);
       } finally {
@@ -146,10 +135,7 @@ export default function Admin() {
 
     try {
       const citaRef = doc(db, 'citas', editCita.id);
-      await updateDoc(citaRef, {
-        ...editCita,
-        hora: formatHourForInput(editCita.hora)
-      });
+      await updateDoc(citaRef, editCita);
       setCitas(citas.map(cita => cita.id === editCita.id ? editCita : cita));
       setFilteredCitas(filteredCitas.map(cita => cita.id === editCita.id ? editCita : cita));
       setEditMode(false);
@@ -204,34 +190,35 @@ export default function Admin() {
                 <td className="py-3 px-4 border-b text-center text-black">{cita.servicio}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.barbero}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.fecha}</td>
-                <td className="py-3 px-4 border-b text-center text-black">{formatHour(cita.hora)}</td>
+                <td className="py-3 px-4 border-b text-center text-black">{cita.hora}</td>
                 <td className="py-3 px-4 border-b text-center text-black">{cita.telefono}</td>
                 <td className="py-3 px-4 border-b text-center">
-                  <button 
-                    onClick={() => handleEditClick(cita)}
-                    className="bg-yellow-500 text-white px-4 py-1 rounded mr-2 hover:bg-yellow-600 transition duration-300"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => handleDeleteClick(cita.id)}
-                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition duration-300"
-                  >
-                    Eliminar
-                  </button>
-                  <button
-                    onClick={() => handleCompleteClick(cita.id)}
-                    className="bg-green-500 text-white px-4 mx-2 py-1 rounded hover:bg-green-600 transition duration-300"
-                  >
-                    Completada
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button 
+                      onClick={() => handleEditClick(cita)}
+                      className="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-600 transition duration-300"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDeleteClick(cita.id)}
+                      className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition duration-300"
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      onClick={() => handleCompleteClick(cita.id)}
+                      className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600 transition duration-300"
+                    >
+                      Completar
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
       {editMode && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
@@ -274,7 +261,6 @@ export default function Admin() {
                   <option value="Enrique">Enrique</option>
                 </select>
               </div>
-
               <div className="mb-4">
                 <label className="block text-black mb-2">Fecha:</label>
                 <input
@@ -317,3 +303,5 @@ export default function Admin() {
     </div>
   );
 }
+
+
